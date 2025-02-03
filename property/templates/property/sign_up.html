@@ -1,0 +1,372 @@
+{% load static%}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title>Home Property | Signup</title>
+
+    <!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Libraries CSS Files -->
+  <link href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+   
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>    
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    
+    <style>
+        #aa-signin {
+            background-image: url('{% static "img/signin.jpeg" %}');
+
+            background-position: center center;
+            background-size: cover;
+            bottom: 0;
+            height: 100%;
+            left: 0;
+            position: fixed;
+            right: 0;
+            top: 0;
+            overflow-y: auto;
+            width: 100%;
+          }
+          #aa-signin:before {
+            background-color: rgba(0, 0, 0, 0.8);
+            content: '';
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+          }
+          #aa-signin .aa-signin-area {
+            display: inline;
+            float: left;
+            padding: 4% 20%;
+            width: 100%;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form {
+            background-color: rgba(255, 255, 255, 0.6);
+            display: inline;
+            padding: 50px;
+            float: left;
+            width: 100%;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-signin-form-title {
+            display: inline;
+            float: left;
+            text-align: center;
+            width: 100%;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-signin-form-title .aa-property-home {
+            color: #000;
+            display: inline-block;
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-signin-form-title h4 {
+            color: #000;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-single-field {
+            display: inline;
+            float: left;
+            width: 100%;
+            margin-bottom: 20px;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-single-field label {
+            color: #000;
+            display: inline-block;
+            text-align: left;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-single-field label .required {
+            color: #f60000;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-single-field input[type="text"],
+          #aa-signin .aa-signin-area .aa-signin-form .aa-single-field input[type="email"],
+          #aa-signin .aa-signin-area .aa-signin-form .aa-single-field input[type="password"] {
+            border: none;
+            color: #555;
+            margin-bottom: 10px;
+            height: 35px;
+            padding: 5px;
+            width: 100%;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            -ms-transition: all 0.5s;
+            -o-transition: all 0.5s;
+            transition: all 0.5s;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-single-field label input [type="checkbox"] {
+            margin-left: 10px;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-single-field textarea {
+            border: none;
+            border-bottom: 2px solid #ccc;
+            color: #555;
+            margin-bottom: 5px;
+            padding: 10px;
+            height: 100px;
+            width: 100%;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            -ms-transition: all 0.5s;
+            -o-transition: all 0.5s;
+            transition: all 0.5s;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-single-submit {
+            display: inline;
+            float: left;
+            text-align: center;
+            width: 100%;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-single-submit input[type="submit"] {
+            color: black;
+            font-size: 16px;
+            font-weight: bold;
+            height: 50px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+            padding: 6px 12px;
+            width: 150px;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            -ms-transition: all 0.5s;
+            -o-transition: all 0.5s;
+            transition: all 0.5s;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-single-submit input[type="submit"]:hover {
+            background-color: #FFF;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-single-submit p {
+            color: #000;
+          }
+          #aa-signin .aa-signin-area .aa-signin-form .aa-single-submit p a {
+            color: #fff;
+            font-weight: bold;
+          }
+
+          .signin-link {
+            color:#006400;/* Change this to your preferred color */
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .signin-link:hover {
+            text-decoration: underline; /* Adds an underline on hover */
+        }
+        
+          
+        </style>
+
+  </head>
+  <body>
+    <section id="aa-signin">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="aa-signin-area">
+                <div class="aa-signin-form">
+                  <div class="aa-signin-form-title">
+                    <a class="aa-property-home" href="{% url 'index' %}">Property Hive</a>
+                    <h4>Create your account and Stay with us</h4>
+                  </div>
+                  <form class="contactform"  method="POST"> 
+                    {% csrf_token %}
+                    {{ form.as_p }}                                                
+                    <div class="aa-single-field">
+                      <label for="name">Name <span class="required">*</span></label>
+                      <input type="text" id="name" required="required" maxlength="20" aria-required="true" value="" name="name">
+                      <span id="name-error" style="color: red; display: none;"></span> 
+                    </div>
+                    
+                    <div class="aa-single-field">
+                      <label for="email">Email <span class="required">*</span></label>
+                      <input type="email" required="required" aria-required="true" value="" name="email">
+                    </div>
+                    <div class="aa-single-field">
+                      <label for="password">Password <span class="required">*</span></label>
+                      <input type="password" id="password" required="required" name="password" minlength="8" maxlength="12">
+                      <span id="password-error" style="color: red; display: none;"></span>
+                  </div>
+                  
+                  <div class="aa-single-field">
+                    <label for="confirm-password">Confirm Password <span class="required">*</span></label>
+                    <input type="password" id="confirm-password" required="required" name="confirm-password" minlength="8" maxlength="12"> 
+                    <span id="confirm-password-error" style="color: red; display: none;"></span>
+                  </div>
+                  
+                    <div class="aa-single-field">
+                        <label for="dob">Date of Birth <span class="required">*</span></label>
+                        <input type="date" name="dob" required>
+                    </div>
+                    <div class="aa-single-field">
+                        <label>Gender <span class="required">*</span></label>
+                        <div>
+                            <input type="radio" id="male" name="gender" value="male" required>
+                            <label for="male">Male</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="female" name="gender" value="female">
+                            <label for="female">Female</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="other" name="gender" value="other">
+                            <label for="other">Other</label>
+                        </div>
+                    </div>
+                    <div class="aa-single-field">
+                        <label for="role">Role <span class="required">*</span></label>
+                        <select name="role" required style="width: 100%; height: 35px; padding: 5px; border: none; color: #555;">
+                            <option value="">Select Role</option>
+                            <option value="landlord">Landlord</option>
+                            <option value="tenant">Tenants</option>
+                        </select>
+                    </div>
+                    
+                    <div class="aa-single-submit">
+                        <input type="submit" value="Create Account" name="submit">                    
+                    </div>
+                    <p style="text-align: center; margin-top: 10px;">
+                      Already have an account? <a href="{% url 'sign_in' %}" class="signin-link">Sign In</a>
+                  </p>
+                  
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> 
+
+
+      <script>
+        // JavaScript for dynamic validation
+        document.getElementById('name').addEventListener('input', function() {
+            const nameField = this;
+            const errorMessage = document.getElementById('name-error');
+            const nameRegex = /^[A-Za-z\s]+$/; // Regex for only letters and spaces
+    
+            // Check if the name starts with a space
+            if (nameField.value.startsWith(' ')) {
+                errorMessage.textContent = 'Name cannot start with a space.';
+                errorMessage.style.display = 'block';
+                nameField.style.borderColor = 'red'; // Change border color to indicate error
+            } else if (!nameRegex.test(nameField.value)) {
+                errorMessage.textContent = 'Please enter a valid name (letters only, no numbers or special symbols).';
+                errorMessage.style.display = 'block';
+                nameField.style.borderColor = 'red'; // Change border color to indicate error
+            } else {
+                errorMessage.style.display = 'none'; // Hide error message
+                nameField.style.borderColor = ''; // Reset border color
+            }
+
+            /// Password validation
+    document.getElementById('password').addEventListener('input', function() {
+      const passwordField = this;
+      const errorMessage = document.getElementById('password-error');
+
+      // Regular expressions for validation
+      const uppercaseRegex = /[A-Z]/; // At least one uppercase letter
+      const lowercaseRegex = /[a-z]/; // At least one lowercase letter
+      const digitRegex = /[0-9]/; // At least one digit
+      const symbolRegex = /[!@#$%^&*(),.?":{}|<>]/; // At least one special character
+      const lengthRegex = /^.{8,12}$/; // Length between 8 and 12 characters
+
+      // Validate password
+      if (!lengthRegex.test(passwordField.value)) {
+          errorMessage.textContent = 'Password must be between 8 and 12 characters.';
+          errorMessage.style.display = 'block';
+          passwordField.style.borderColor = 'red'; // Change border color to indicate error
+      } else if (!uppercaseRegex.test(passwordField.value)) {
+          errorMessage.textContent = 'Password must contain at least one uppercase letter.';
+          errorMessage.style.display = 'block';
+          passwordField.style.borderColor = 'red';
+      } else if (!lowercaseRegex.test(passwordField.value)) {
+          errorMessage.textContent = 'Password must contain at least one lowercase letter.';
+          errorMessage.style.display = 'block';
+          passwordField.style.borderColor = 'red';
+      } else if (!digitRegex.test(passwordField.value)) {
+          errorMessage.textContent = 'Password must contain at least one digit.';
+          errorMessage.style.display = 'block';
+          passwordField.style.borderColor = 'red';
+      } else if (!symbolRegex.test(passwordField.value)) {
+          errorMessage.textContent = 'Password must contain at least one special character.';
+          errorMessage.style.display = 'block';
+          passwordField.style.borderColor = 'red';
+      } else {
+          errorMessage.style.display = 'none'; // Hide error message
+          passwordField.style.borderColor = ''; // Reset border color
+      }
+  });
+});
+
+  // Confirm Password validation
+document.getElementById('confirm-password').addEventListener('input', function() {
+  const passwordField = document.getElementById('password');
+  const confirmPasswordField = this;
+  const errorMessage = document.getElementById('confirm-password-error');
+
+  // Check if the passwords match
+  if (confirmPasswordField.value !== passwordField.value) {
+      errorMessage.textContent = 'Passwords do not match.';
+      errorMessage.style.display = 'block';
+      confirmPasswordField.style.borderColor = 'red'; // Change border color to indicate error
+  } else {
+      errorMessage.style.display = 'none'; // Hide error message
+      confirmPasswordField.style.borderColor = ''; // Reset border color
+  }
+});
+    </script>
+    
+
+
+   <!-- JavaScript Libraries -->
+<script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
+<script src="{% static 'lib/popper/popper.min.js' %}"></script>
+<script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'lib/easing/easing.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+<script src="{% static 'lib/scrollreveal/scrollreveal.min.js' %}"></script>
+<!-- Contact Form JavaScript File -->
+<script src="{% static 'contactform/contactform.js' %}"></script>
+
+<!-- Template Main Javascript File -->
+<script src="{% static 'js/main.js' %}"></script>
+
+
+
+  </body>
+</html>
+
+{%endblock%}

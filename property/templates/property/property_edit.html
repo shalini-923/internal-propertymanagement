@@ -1,0 +1,189 @@
+{% load static%}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>EstateAgency Bootstrap Template</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"
+rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}"
+rel="stylesheet">
+  <title>{{ property.title }}</title>
+
+  <!-- Libraries CSS Files -->
+  <link href="{% static 'lib/font-awesome/css/font-awesome.min.css'
+%}" rel="stylesheet">
+  <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/ionicons/css/ionicons.min.css' %}"
+rel="stylesheet">
+  <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css'
+%}" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+  <style>
+    /* Custom form styling */
+    .form-control {
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px solid #ced4da;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    .form-control:focus {
+      border-color: #80bdff;
+      box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+    }
+    .form-group label {
+      font-weight: 500;
+      color: #333;
+    }
+    .btn-primary, .btn-secondary {
+      border-radius: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      transition: background-color 0.3s ease;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+    .btn-secondary {
+      background-color: #6c757d;
+      border-color: #6c757d;
+      transition: background-color 0.3s ease;
+    }
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+    .card {
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+    .card-header {
+      background-color: #007bff;
+      color: white;
+      font-size: 1.25rem;
+      font-weight: bold;
+      text-align: center;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+    .back-to-top {
+      background: #007bff;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<!--/ Nav Start /-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+  <div class="container">
+    <a class="navbar-brand text-brand" href="{% url 'index'
+%}">Property<span class="color-b">Hive</span></a>
+    <button class="navbar-toggler" type="button"
+data-toggle="collapse" data-target="#navbarDefault"
+aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle
+navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center"
+id="navbarDefault">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'index' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'property_grid' %}">Property</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'blog_grid' %}">Blog</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#"
+id="navbarDropdown" role="button" data-toggle="dropdown"
+aria-haspopup="true" aria-expanded="false">Pages</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'agents' %}">Agents Grid</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+        </li>
+      </ul>
+    </div>
+    <button class="btn btn-outline-primary d-none d-md-block ml-3"
+data-toggle="collapse" data-target="#navbarTogglerDemo01"
+aria-expanded="false">
+      <i class="fa fa-search"></i>
+    </button>
+  </div>
+</nav>
+<!--/ Nav End /-->
+
+<div class="container my-5 pt-5">
+  <div class="card shadow-sm mt-5">
+    <div class="card-header">
+      Edit Property: {{ property.title }}
+    </div>
+    <div class="card-body">
+      <form method="POST" enctype="multipart/form-data" class="p-4">
+        {% csrf_token %}
+
+        {{ form.as_p }}  <!-- This renders the fields of your
+PropertyForm with custom styling applied -->
+
+        <div class="d-flex justify-content-between mt-4">
+          <button type="submit" class="btn btn-primary"><i class="fa
+fa-save"></i> Save Changes</button>
+          <a href="{% url 'property_grid' %}" class="btn
+btn-secondary"><i class="fa fa-times"></i> Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<a href="#" class="back-to-top rounded-circle d-flex
+align-items-center justify-content-center">
+  <i class="fa fa-chevron-up"></i>
+</a>
+<div id="preloader"></div>
+
+<!-- JavaScript Libraries -->
+<script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
+<script src="{% static 'lib/popper/popper.min.js' %}"></script>
+<script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'lib/easing/easing.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+<script src="{% static 'lib/scrollreveal/scrollreveal.min.js' %}"></script>
+
+<!-- Template Main Javascript File -->
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
+
+{%endblock%}

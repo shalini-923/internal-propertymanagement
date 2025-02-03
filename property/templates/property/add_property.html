@@ -1,0 +1,232 @@
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Property</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('{% static "img/add_property.jpeg" %}'); /* Background image path */
+            background-position: center;
+            background-size: cover;
+            height: 100vh; /* Full height */
+            margin: 0; /* Remove default margin */
+            font-family: 'Arial', sans-serif; /* Slightly modernized font */
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Darker overlay for readability */
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.95); /* Less transparency */
+            border-radius: 12px;
+            padding: 40px;
+            margin-top: 70px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+ 
+            margin-bottom: 20px;
+            color: hsl(120, 100%, 20%); /* Original green color */
+            text-align: center; /* Center the text */
+            text-transform: uppercase; /* Make text uppercase for emphasis */
+            letter-spacing: 2px; /* Add spacing between letters */
+            padding: 10px 0; /* Add padding for spacing around the text */
+            background-color: rgba(255, 255, 255, 0.8); /* Light background for contrast */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+            transition: color 0.3s, transform 0.3s; /* Transition for hover effects */
+        }
+        
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h2 {
+            font-size: 1.4rem;
+            color:#006400;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            border-color: #007bff;
+        }
+
+        .submit-btn {
+            background-color:#006400;
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: none;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color:#90EE90;
+        }
+
+        .errorlist {
+            color: red;
+            margin-top: 15px;
+        }
+
+        .text-center {
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group div {
+            margin-bottom: 15px; /* Added space between checkbox fields */
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="overlay"></div> <!-- Overlay for better readability -->
+
+<div class="container">
+    <h1 class="text-center">ADD PROPERTY</h1>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+       
+        <div class="form-section">
+            <h2>1. Basic Info</h2>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    {{ form.title.label_tag }} {{ form.title }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.category.label_tag }} {{ form.category }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Property Type:</label>
+                {% for choice in form.property_type %}
+                    <div class="form-check">
+                        {{ choice.tag }} {{ choice.choice_label }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h2>2. Location</h2>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    {{ form.country.label_tag }} {{ form.country }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.city.label_tag }} {{ form.city }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    {{ form.district.label_tag }} {{ form.district }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.zip_code.label_tag }} {{ form.zip_code }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.street_address.label_tag }} {{ form.street_address }}
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>3. Price</h2>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    {{ form.currency.label_tag }} {{ form.currency }} 
+                </div>
+                <div class="col-md-6">
+                    {{ form.price.label_tag }} {{ form.price }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.frequency.label_tag }} {{ form.frequency }}
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h2>4. Photos/Video</h2>
+            <div class="form-group">
+                {{ form.photos.label_tag }} {{ form.photos }}
+            </div>
+            <div class="form-group">
+                {{ form.videos.label_tag }} {{ form.videos }}
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <h2>5. Contact</h2>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    {{ form.first_name.label_tag }} {{ form.first_name }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.contact_email.label_tag }} {{ form.contact_email }}  <!-- Changed 'email' to 'contact_email' -->
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.phone_number.label_tag }} {{ form.phone_number }}
+            </div>
+        </div>
+        
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+        </div>
+        
+        {% if form.errors %}
+        <div class="errorlist">
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    <li>{{ field }}: {{ errors|join:", " }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+{% endblock %}

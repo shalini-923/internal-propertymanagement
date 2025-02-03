@@ -1,0 +1,176 @@
+{% load static%}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>EstateAgency Bootstrap Template</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <title>{{ property.title }}</title>
+
+  <!-- Libraries CSS Files -->
+  <link href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+  <!-- Main Stylesheet File -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+
+  <!-- =======================================================
+    Theme Name: EstateAgency
+    Theme URL: https://bootstrapmade.com/real-estate-agency-bootstrap-template/
+    Author: BootstrapMade.com
+    License: https://bootstrapmade.com/license/
+  ======================================================= -->
+
+  <style>
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+
+    body {
+      padding-top: 70px; /* Navbar ki height ke according adjust karein */
+  }
+
+  .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1030;
+      height: 70px; /* Set height for navbar */
+  }
+
+  .navbar .btn {
+      margin-left: auto; /* Aligns the button to the right */
+  }
+
+  .navbar-nav .nav-link {
+      color: black; /* Default color */
+  }
+
+  .navbar-nav .nav-link:hover {
+      color: #555; /* Hover color */
+  }
+
+  .navbar-nav .nav-link.active {
+      color: #333; /* Active link color */
+  }
+  
+</style>
+</head>
+
+<body>
+
+  <div class="click-closed"></div>
+  
+              
+            
+  <!-- Nav Start -->
+  <nav class="navbar navbar-expand-lg" style="background: linear-gradient(135deg, #e0f7fa, #e1bee7);">
+    <a class="navbar-brand text-brand" href="{% url 'index' %}">Property<span class="color-b">Hive</span></a>
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                </li>
+            </ul>
+            <!-- Back Button -->
+            <button class="btn btn-outline-secondary" onclick="window.history.length > 1 ? window.history.back() : window.location.href = '{% url 'index' %}'">
+              <i class="fas fa-arrow-left"></i> Back
+          </button>
+          
+        </div>
+    </div>
+</nav>
+<!-- Nav End -->
+    
+
+  <div class="container my-5">
+    <h1>{{ property.title }}</h1>
+    <img src="{{ property.photos.url }}" alt="Property Image" class="img-fluid">
+    <p><strong>Description:</strong> {{ property.description }}</p>
+    <p><strong>Price:</strong> {{ property.price }}</p>
+    <p><strong>Currency:</strong>{{ property.currency }}</p>
+    <p><strong>Frequency:</strong>({{ property.frequency }})</p>
+    <p><strong>Category:</strong> {{ property.get_category_display }}</p>
+    {% comment %} <p><strong>Location:</strong> {{ property.street_address }},</p> {% endcomment %}
+    {% comment %} <p><strong>City:</strong>{{ property.city }},</p> {% endcomment %}
+    <p><strong>District:</strong>{{ property.district }},</p> 
+    {% comment %} <p><strong>Country:</strong>{{ property.country }},</p> {% endcomment %}
+    <p> <strong>Zip Code:</strong> {{ property.zip_code }}</p>
+    <p><strong>Location:</strong> {{ property.street_address }}, {{ property.city }}, {{ property.country }}</p>
+    <p><strong>Contact:</strong> {{ property.first_name }},</p>
+    <p><strong>Phone.No:</strong>{{ property.phone_number }}</p>
+    <p><strong>Email:</strong> {{ property.contact_email }}</p>
+    <h2>Location on Map</h2>
+    <div id="map" style="height: 400px;"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script>
+        var map = L.map('map').setView([{{ property.latitude }}, {{ property.longitude }}], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        
+        L.marker([{{ property.latitude }}, {{ property.longitude }}]).addTo(map)
+            .bindPopup('{{ property.title }}')
+            .openPopup();
+    </script>
+    
+      
+    {% if user.is_authenticated and user.role == 'landlord' %}
+    <a href="{% url 'property_edit' property.id %}" class="btn btn-warning">Edit</a>
+    <a href="{% url 'property_delete' property.id %}" class="btn btn-danger">Delete</a>
+{% endif %}
+<a href="{% url 'property_grid' %}" class="btn btn-secondary">Back to Listings</a>
+</div>
+</div>
+
+
+ <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+ <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
+ <script src="{% static 'lib/popper/popper.min.js' %}"></script>
+ <script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
+ <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+ <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+ <script src="{% static 'lib/scrollreveal/scrollreveal.min.js' %}"></script>
+ <!-- Contact Form JavaScript File -->
+ <script src="{% static 'contactform/contactform.js' %}"></script>
+ 
+ <!-- Template Main Javascript File -->
+ <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
+
+{%endblock%}

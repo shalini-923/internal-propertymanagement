@@ -1,0 +1,224 @@
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>EstateAgency Bootstrap Template</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <title>{{ property.title }}</title>
+
+  <!-- Libraries CSS Files -->
+  <link href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <!-- Main Stylesheet File -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <style>
+    body {
+        padding-top: 70px; /* Navbar ki height ke according adjust karein */
+    }
+
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1030;
+        height: 70px; /* Set height for navbar */
+    }
+
+    .navbar .btn {
+        margin-left: auto; /* Aligns the button to the right */
+    }
+
+    .navbar-nav .nav-link {
+        color: black; /* Default color */
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #555; /* Hover color */
+    }
+
+    .navbar-nav .nav-link.active {
+        color: #333; /* Active link color */
+    }
+    
+    .list-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+    }
+
+    .list-image {
+        margin-right: 15px; /* Space between image and title */
+    }
+</style>
+
+</head>
+<body>
+        
+    <!-- Nav Start -->
+    <nav class="navbar navbar-expand-lg" style="background: linear-gradient(135deg, #e0f7fa, #e1bee7);">
+        <a class="navbar-brand text-brand" href="{% url 'index' %}">Property<span class="color-b">Hive</span></a>
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                </ul>
+                <!-- Back Button -->
+                <button class="btn btn-outline-secondary" onclick="window.history.back()"> <i class="fas fa-arrow-left"></i> Back</button>
+            </div>
+        </div>
+    </nav>
+    <!-- Nav End -->
+        
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Property Listings</h1>
+
+        <div class="view-toggle mb-4">
+            <a href="?view_type=grid" class="btn btn-primary {% if view_type == 'grid' %}active{% endif %}">
+                <i class="fas fa-th"></i>
+            </a>
+            <a href="?view_type=list" class="btn btn-secondary {% if view_type == 'list' %}active{% endif %}">
+                <i class="fas fa-list"></i>
+            </a>
+        </div>
+        
+        
+        <div id="propertyContainer" class="row">
+            {% for property in page_obj.object_list %}
+            <div class="col-md-4 property-card {% if view_type == 'grid' %}grid-view{% else %}list-view{% endif %}">
+                <!-- Grid View Card -->
+                <div class="col-md-4 property-card grid-view">
+                    <div class="card h-100">
+                        {% if property.photos %}
+                            <img src="{{ property.photos.url }}" class="card-img-top" alt="Property Image">
+                        {% else %}
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Default Image">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ property.title }}</h5>
+                            <a href="{% url 'property_single' property.id %}" class="btn btn-info">View</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- List View Item -->
+                <div class="col-12 property-card list-view" style="display: none;">
+                    <div class="list-item">
+                        {% if property.photos %}
+                            <img src="{{ property.photos.url }}" class="list-image" alt="Property Image" style="width: 100px; height: auto;">
+                        {% else %}
+                            <img src="https://via.placeholder.com/100" class="list-image" alt="Default Image" style="width: 100px; height: auto;">
+                        {% endif %}
+                        <h5>{{ property.title }}</h5>
+                        <a href="{% url 'property_single' property.id %}" class="btn btn-info">View</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination Controls -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="First">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active">
+                            <a class="page-link">{{ num }}</a>
+                        </li>
+                    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+        
+        {% if not page_obj.object_list %}
+            <p>No properties found.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        
+    </script>
+    
+
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+    <div id="preloader"></div>
+
+    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
+    <script src="{% static 'lib/popper/popper.min.js' %}"></script>
+    <script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/scrollreveal/scrollreveal.min.js' %}"></script>
+    <!-- Contact Form JavaScript File -->
+    <script src="{% static 'contactform/contactform.js' %}"></script>
+    
+    <!-- Template Main Javascript File -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>
+
+{% endblock %}

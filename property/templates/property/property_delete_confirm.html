@@ -1,0 +1,134 @@
+{% load static%}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>EstateAgency Bootstrap Template</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicons -->
+  <link href="{% static 'img/favicon.png' %}" rel="icon">
+  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+  <!-- Bootstrap CSS File -->
+  <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <title>{{ property.title }}</title>
+
+  <!-- Libraries CSS Files -->
+  <link href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+
+  <!-- Main Stylesheet File -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+     <!--/ Nav Star /-->
+  <nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
+    <div class="container">
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDefault"
+        aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <a class="navbar-brand text-brand" href="{% url 'index' %}">Property<span class="color-b">Hive</span></a>
+      <button type="button" class="btn btn-link nav-search navbar-toggle-box-collapse d-md-none" data-toggle="collapse"
+        data-target="#navbarTogglerDemo01" aria-expanded="false">
+        <span class="fa fa-search" aria-hidden="true"></span>
+      </button>
+      <div class="navbar-collapse collapse justify-content-center" id="navbarDefault">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'property_grid' %}">Property</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'blog_grid' %}">Blog</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Pages
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              {% comment %} <a class="dropdown-item active" href="property-single.html">Property Single</a>
+              <a class="dropdown-item" href="blog-single.html">Blog Single</a> {% endcomment %}
+              <a class="dropdown-item" href="{% url 'agents' %}">Agents Grid</a>
+              {% comment %} <a class="dropdown-item" href="agent-single.html">Agent Single</a> {% endcomment %}
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <button type="button" class="btn btn-b-n navbar-toggle-box-collapse d-none d-md-block" data-toggle="collapse"
+        data-target="#navbarTogglerDemo01" aria-expanded="false">
+        <span class="fa fa-search" aria-hidden="true"></span>
+      </button>
+    </div>
+  </nav>
+  <!--/ Nav End /-->
+
+
+    <div class="container mt-5">
+        <h2>Are you sure you want to delete "{{ property.title }}"?</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger" onclick="confirmDelete({{ property.id }})">Delete</button>
+            <a href="{% url 'property_grid' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+
+    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+   
+
+<script>
+function confirmDelete(propertyId) {
+    if (confirm("Are you sure you want to delete this property?")) {
+        // Build the URL for the delete view using Django's URL template tag
+        window.location.href = "{% url 'property_delete' '0' %}".replace('0', propertyId);
+    }
+}
+</script>
+
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+  <div id="preloader"></div>
+
+ 
+ <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+ <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
+ <script src="{% static 'lib/popper/popper.min.js' %}"></script>
+ <script src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
+ <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+ <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+ <script src="{% static 'lib/scrollreveal/scrollreveal.min.js' %}"></script>
+ <!-- Contact Form JavaScript File -->
+ <script src="{% static 'contactform/contactform.js' %}"></script>
+ 
+ <!-- Template Main Javascript File -->
+ <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
+
+{%endblock%}
+

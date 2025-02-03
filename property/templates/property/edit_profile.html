@@ -1,0 +1,294 @@
+{% load static%}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #343a40;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group label {
+            font-weight: 500;
+            color: #495057;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .is-valid {
+            border-color: #28a745;
+        }
+        .is-invalid {
+            border-color: #dc3545;
+        }
+        .invalid-feedback {
+            display: none;
+        }
+        .is-invalid + .invalid-feedback {
+            display: block;
+        }
+        .password-strength-meter {
+            height: 5px;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+        .strength-weak {
+            width: 33.33%;
+            background-color: #dc3545;
+            border-radius: 5px;
+        }
+        .strength-medium {
+            width: 66.66%;
+            background-color: #ffc107;
+            border-radius: 5px;
+        }
+        .strength-strong {
+            width: 100%;
+            background-color: #28a745;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card p-4">
+            <h2>Edit Profile</h2>
+        <form method="POST" action="{% url 'edit_profile' %}" novalidate>
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" required>
+                <div class="invalid-feedback">Username must start with an alphabet, be 3-12 characters long, and can only contain letters, numbers (after the first letter), and underscores.</div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+            </div>
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+                <div class="invalid-feedback">First Name must only contain letters and be less than 20 characters.</div>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+                <div class="invalid-feedback">Last Name must only contain letters and be less than 20 characters.</div>
+            </div>
+            
+
+            <h4 class="mt-4">Reset Password</h4>
+            <div class="form-group">
+                <label for="old_password">Old Password</label>
+                <input type="password" class="form-control" id="old_password" name="old_password">
+            </div>
+            <div class="form-group">
+                <label for="new_password1">New Password</label>
+                <input type="password" class="form-control" id="new_password1" name="new_password1">
+                <div class="password-strength-meter mt-2">
+                    <div class="strength-weak"></div>
+                </div>
+                <div class="invalid-feedback">Password must be 8-15 characters long, contain an uppercase letter, a lowercase letter, a number, and a special character.</div>
+            </div>
+            <div class="form-group">
+                <label for="new_password2">Confirm New Password</label>
+                <input type="password" class="form-control" id="new_password2" name="new_password2">
+                <div class="invalid-feedback">Passwords must match.</div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Update Profile</button>
+                <button type="submit" name="cancel" class="btn btn-secondary">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Username validation
+        const usernameInput = document.getElementById('username');
+        const restrictedWords = ['bannedword1', 'bannedword2']; // Add banned words here
+
+        usernameInput.addEventListener('input', function () {
+            const username = this.value;
+
+            // Validation rules
+            const noConsecutive4Identical = !/(.)\1{3,}/.test(username); // No more than 3 consecutive identical character
+            const startsWithAlphabet = /^[A-Za-z]/.test(username); // Must start with an alphabet
+            const isValidLength = username.length <= 12; // Must not exceed 12 characters
+            const isValidMinLength = username.length >= 3; // Must be at least 3 characters long
+            const onlyValidCharacters = /^[A-Za-z][A-Za-z0-9_]*$/.test(username); // Only letters, digits (after first letter), and underscores
+            const noSpaces = !/\s/.test(username); // No spaces allowed
+            const noConsecutiveSpecials = !(/__/.test(username)); // No consecutive underscores
+            const noConsecutiveDigits = !(/\d{5,}/.test(username)); // No more than four consecutive digits
+            const noLeadingTrailingUnderscore = !(/^_|_$/.test(username)); // No leading or trailing underscores
+            const noOffensiveWords = !restrictedWords.some(word => username.toLowerCase().includes(word)); // No offensive words
+            const noRepeatedChars = !(/(.)\1{2,}/.test(username)); // No repeated characters
+            const hasAlphabet = /[A-Za-z]/.test(username); // Must have at least one alphabet
+
+            // Apply validation rules
+            if (startsWithAlphabet && isValidLength && isValidMinLength && onlyValidCharacters && noSpaces && noConsecutiveSpecials && noConsecutiveDigits && noLeadingTrailingUnderscore && noOffensiveWords && noRepeatedChars && hasAlphabet) {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+            } else {
+                this.classList.remove('is-valid');
+                this.classList.add('is-invalid');
+
+                // Prevent typing beyond 12 characters
+                if (!isValidLength) {
+                    this.value = username.substring(0, 12);
+                }
+            }
+        });
+
+                    // Email validation
+         const emailInput = document.getElementById('email');
+        
+         emailInput.addEventListener('input', function () {
+             const email = this.value;
+ 
+             // Basic email format validation
+             
+             const formatPattern = /^[a-zA-Z][a-zA-Z0-9.]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+             const domainPattern = /^[a-zA-Z0-9.-]+$/;
+             const tldList = ['com', 'org', 'net', 'edu', 'in', 'ac', 'co', 'firm', 'gen', 'ind']; // Add more valid TLDs as needed
+             
+             const emailParts = email.split('@');
+             const usernameLength = emailParts[0].length;
+             const domainParts = emailParts[1]?.split('.') || [];
+             const domainLength = domainParts[0]?.length || 0;
+             const tld = domainParts[1] || '';
+
+             const consecutivePattern = /(.)\1{2,}/; // Matches three or more consecutive identical characters
+             const hasConsecutiveChars = consecutivePattern.test(email);
+            console.log('Has consecutive chars:', hasConsecutiveChars);
+             
+             const isTLDRepeated = domainParts.length > 1 && domainParts[1] === domainParts[2];
+             const isValidFormat = formatPattern.test(email);
+             const isValidDomainFormat = domainPattern.test(domainParts[0] || '');
+             const isValidUsernameLength = usernameLength <= 20;
+             const isValidDomainLength = domainLength <= 20;
+             const isWithinMaxLength = email.length <= 40;
+             const isValidTLD = tldList.includes(tld) && !isTLDRepeated; // Add check for repeated TLD
+             
+ 
+             if (isValidFormat && isValidDomainFormat && isValidUsernameLength && isValidDomainLength && isWithinMaxLength && isValidTLD) {
+                 this.classList.remove('is-invalid');
+                 this.classList.add('is-valid');
+             } else {
+                 this.classList.remove('is-valid');
+                 this.classList.add('is-invalid');
+             }
+         });
+
+
+                    // Function to validate first and last name fields
+            function validateNameInput(inputElement) {
+                inputElement.addEventListener('input', function () {
+                    const name = this.value;
+                    const isValid = /^[A-Za-z]+$/.test(name);  // Allows only letters
+                    const maxLength = 20;  // Max 20 characters
+
+                    // Check if valid and not exceeding max length
+                    if (isValid && name.length <= maxLength) {
+                        this.classList.remove('is-invalid');
+                        this.classList.add('is-valid');
+                    } else {
+                        this.classList.remove('is-valid');
+                        this.classList.add('is-invalid');
+
+                        // Prevent typing beyond 20 characters
+                        if (name.length > maxLength) {
+                            this.value = name.substring(0, maxLength);
+                        }
+                    }
+                });
+            }
+
+            // Apply validation to first and last name fields
+            const firstNameInput = document.getElementById('first_name');
+            const lastNameInput = document.getElementById('last_name');
+
+            validateNameInput(firstNameInput);
+            validateNameInput(lastNameInput);
+
+
+        /// Password validation with detailed rules
+        const passwordInput = document.getElementById('new_password1');
+        passwordInput.addEventListener('input', function () {
+            // Limit input to 15 characters
+            if (this.value.length > 15) {
+                this.value = this.value.slice(0, 15);
+            }
+
+            const password = this.value;
+            const hasUppercase = /[A-Z]/.test(password);
+            const hasLowercase = /[a-z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
+            const isValidLength = password.length >= 8 && password.length <= 15;
+            const hasConsecutiveIdentical = /(.)\1{2,}/.test(password);
+            const hasOnlyLetters = /^[A-Za-z]+$/.test(password);
+            const hasOnlyNumbers = /^[0-9]+$/.test(password);
+
+            if (isValidLength && hasUppercase && hasLowercase && hasNumber && hasSpecialChar && !hasConsecutiveIdentical && !hasOnlyLetters && !hasOnlyNumbers) {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+                document.querySelector('#new_password1 + .invalid-feedback').textContent = '';
+            } else {
+                this.classList.remove('is-valid');
+                this.classList.add('is-invalid');
+                document.querySelector('#new_password1 + .invalid-feedback').textContent = 'Password must meet all required conditions.';
+            }
+        });
+
+        // Confirm password validation
+        const confirmPasswordInput = document.getElementById('new_password2');
+        const newPasswordInput = document.getElementById('new_password1');
+        confirmPasswordInput.addEventListener('input', function () {
+            const password = newPasswordInput.value;
+            const confirmPassword = this.value;
+
+            if (confirmPassword === password) {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+            } else {
+                this.classList.remove('is-valid');
+                this.classList.add('is-invalid');
+            }
+        });
+    </script>
+</body>
+</html>
+
+{%endblock%}
