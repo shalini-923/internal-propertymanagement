@@ -8,3 +8,4 @@ venv/
 staticfiles/
 media/
 migrations/*.py
+.DS_store
